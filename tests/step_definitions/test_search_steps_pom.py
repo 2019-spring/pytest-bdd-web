@@ -2,7 +2,7 @@ from selenium import webdriver
 import pytest
 import time
 from pytest_bdd import scenarios, given, when, then, parsers
-
+from pages.home_page import HeaderPanel as hpanel
 
 # CONSTANTS
 HOME_URL = "http://automationpractice.com/"
@@ -18,23 +18,15 @@ def test_start_home(browser):
     time.sleep(5)
 
 
-@when("the user searches for dress")
-def test_search_web(browser):
-    # element locators
+@when(parsers.parse("the user searches for {phrase}"))
+def test_search_web(browser, phrase):
     print('search is staritng')
-    search_box = browser.find_element_by_name("search_query")
-    search_button = browser.find_element_by_name("submit_search")
-
-    search_box.send_keys("dress")
-    search_button.click()
+    hpanel.search_box.send_keys(phrase)
+    hpanel.click_search_button()
     print('done')
 
 
 @then("at least one product is listed")
 def test_verify_products_list(browser):
-    # elements from the result
-    products = browser.find_elements_by_css_selector(
-        ".center_column .product-name")
-
-    assert len(products) >= 1
+    assert hpanel.get_product_count() >= 1
     print('search result verified')
