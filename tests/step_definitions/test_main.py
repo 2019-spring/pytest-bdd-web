@@ -11,6 +11,7 @@ from selenium.webdriver.support import expected_conditions as EC
 HOME_URL = "http://automationpractice.com/"
 
 
+# pages objects
 class BasePage(object):
 
     def __init__(self, browser):
@@ -19,7 +20,7 @@ class BasePage(object):
 
         self.search_box_id = 'search_query_top'
 
-    def enter_search(self, text):
+    def enter_search_text(self, text):
         # search_box = self.wait.until(EC.presence_of_element_located(
         #     self.browser.find_element(By.ID, self.search_box_id)))
         search_box = self.browser.find_element(By.ID, self.search_box_id)
@@ -27,19 +28,16 @@ class BasePage(object):
         search_box.send_keys(text)
 
 
+# tests - step definitions
 class TestMain():
 
     def test_launch(self, browser):
         browser.get(HOME_URL)
 
     def test_search(self, browser):
-        # search_box = browser.find_element(By.ID, 'search_query_top')
-        # search_box.send_keys('dress')
-        # search_box.send_keys(Keys.RETURN)
-
         search = BasePage(browser)
-        search.enter_search('dress')
-        search.enter_search(Keys.RETURN)
+        search.enter_search_text('dress')
+        search.enter_search_text(Keys.RETURN)
 
 
 if __name__ == "__main__":
