@@ -2,7 +2,7 @@ from selenium import webdriver
 import pytest
 import time
 from pytest_bdd import scenarios, given, when, then, parsers
-from pages.home_page import HeaderPanel as hpanel
+from pages import HeaderPanel as hpanel
 
 # CONSTANTS
 HOME_URL = "http://automationpractice.com/"
